@@ -4,5 +4,5 @@ namespace NewsArticles.API.Persistence.Identity;
 
 public class Author : User
 {
-    public required List<NewsArticle> NewsArticles { get; set; } = [];
+    public virtual required List<NewsArticle> NewsArticles { get; set; } = [];
 }
