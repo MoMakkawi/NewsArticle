@@ -20,8 +20,7 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
     {
         builder.Entity<Author>()
             .HasMany(x => x.NewsArticles)
-            .WithOne()
-            .HasForeignKey(x => x.AuthorId);
+            .WithOne();
 
         builder.Entity<Commenter>()
             .HasMany<Comment>()
@@ -33,8 +32,19 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
             .WithOne()
             .HasForeignKey(x => x.CommenterId);
 
+
+
+        builder.Entity<PublishedDetails>()
+            .HasOne(x => x.Author)
+            .WithMany()
+            .HasForeignKey(x => x.AuthorId);
+
         builder.Entity<NewsArticle>()
             .HasMany(x => x.Comments)
+            .WithOne();
+
+        builder.Entity<NewsArticle>()
+            .HasOne(x => x.PublishedDetails)
             .WithOne();
 
     }
