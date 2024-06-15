@@ -11,4 +11,6 @@ public class NewsArticle
 
     public List<Like> Likes { get; set; } = [];
     public virtual ICollection<Comment> Comments { get; set; } = [];
+
+    public Guid AuthorId { get; set; }
 }

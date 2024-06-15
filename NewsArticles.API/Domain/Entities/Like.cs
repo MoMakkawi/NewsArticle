@@ -5,5 +5,5 @@ namespace NewsArticles.API.Domain.Entities;
 [ComplexType]
 public class Like
 {
-    public Guid UserId { get; set; }
+    public Guid CommenterId { get; set; }
 }

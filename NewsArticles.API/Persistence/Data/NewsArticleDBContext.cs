@@ -16,5 +16,27 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
     public DbSet<NewsArticle> NewsArticles {  get; set; }
     public DbSet<Comment> Comments {  get; set; }
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Author>()
+            .HasMany(x => x.NewsArticles)
+            .WithOne()
+            .HasForeignKey(x => x.AuthorId);
+
+        builder.Entity<Commenter>()
+            .HasMany<Comment>()
+            .WithOne(x =>x.Commenter)
+            .HasForeignKey(x => x.CommenterId);
+
+        builder.Entity<Commenter>()
+            .HasMany<Like>()
+            .WithOne()
+            .HasForeignKey(x => x.CommenterId);
+
+        builder.Entity<NewsArticle>()
+            .HasMany(x => x.Comments)
+            .WithOne();
+
+    }
 
 }
