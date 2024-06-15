@@ -18,6 +18,15 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+
+        // Configuring the TPH (Table-per-Hierarchy) for User hierarchy
+        builder.Entity<User>()
+            .HasDiscriminator<string>("UserType")
+            .HasValue<User>("User")
+            .HasValue<Admin>("Admin")
+            .HasValue<Commenter>("Commenter")
+            .HasValue<Author>("Author");
+
         builder.Entity<Author>()
             .HasMany(x => x.NewsArticles)
             .WithOne();
@@ -28,7 +37,7 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
             .HasForeignKey(x => x.CommenterId);
 
         builder.Entity<Commenter>()
-            .HasMany<Like>()
+            .HasMany<Interaction>()
             .WithOne()
             .HasForeignKey(x => x.CommenterId);
 
@@ -40,13 +49,20 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
             .HasForeignKey(x => x.AuthorId);
 
         builder.Entity<NewsArticle>()
-            .HasMany(x => x.Comments)
+            .HasMany(x => x.Interaction)
             .WithOne();
 
         builder.Entity<NewsArticle>()
-            .HasOne(x => x.PublishedDetails)
+            .HasMany(x => x.Comments)
             .WithOne();
 
+        builder.Entity<PublishedDetails>()
+            .HasOne<NewsArticle>()
+            .WithOne(x => x.PublishedDetails)
+            .HasForeignKey<PublishedDetails>(x => x.NewsArticleId);
+
+
+        base.OnModelCreating(builder);
     }
 
 }

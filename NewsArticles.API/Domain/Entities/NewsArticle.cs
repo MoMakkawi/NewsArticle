@@ -9,6 +9,6 @@ public class NewsArticle
     public required List<string> ImagePaths { get; set; } = [];
     public required PublishedDetails PublishedDetails { get; set; }
 
-    public List<Like> Likes { get; set; } = [];
+    public virtual ICollection<Interaction> Interaction { get; set; } = [];
     public virtual ICollection<Comment> Comments { get; set; } = [];
 }

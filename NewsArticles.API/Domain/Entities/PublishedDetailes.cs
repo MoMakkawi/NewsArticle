@@ -9,4 +9,6 @@ public class PublishedDetails
 
     public Guid AuthorId { get; set; }
     public virtual required Author Author { get; set; }
+
+    public Guid NewsArticleId { get; set; }
 }
