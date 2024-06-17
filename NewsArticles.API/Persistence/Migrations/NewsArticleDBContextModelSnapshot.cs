@@ -175,7 +175,7 @@ namespace NewsArticles.API.Migrations
 
                     b.HasIndex("NewsArticleId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("NewsArticles.API.Domain.Entities.Interaction", b =>
@@ -199,7 +199,7 @@ namespace NewsArticles.API.Migrations
 
                     b.HasIndex("NewsArticleId");
 
-                    b.ToTable("Interaction");
+                    b.ToTable("Interaction", (string)null);
                 });
 
             modelBuilder.Entity("NewsArticles.API.Domain.Entities.NewsArticle", b =>
@@ -230,7 +230,7 @@ namespace NewsArticles.API.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("NewsArticles");
+                    b.ToTable("NewsArticles", (string)null);
                 });
 
             modelBuilder.Entity("NewsArticles.API.Domain.Entities.PublishedDetails", b =>
@@ -255,7 +255,7 @@ namespace NewsArticles.API.Migrations
                     b.HasIndex("NewsArticleId")
                         .IsUnique();
 
-                    b.ToTable("PublishedDetails");
+                    b.ToTable("PublishedDetails", (string)null);
                 });
 
             modelBuilder.Entity("NewsArticles.API.Persistence.Identity.User", b =>
