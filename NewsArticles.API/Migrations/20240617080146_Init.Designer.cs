@@ -12,7 +12,7 @@ using NewsArticles.API.Persistence.Data;
 namespace NewsArticles.API.Migrations
 {
     [DbContext(typeof(NewsArticleDBContext))]
-    [Migration("20240617075329_Init")]
+    [Migration("20240617080146_Init")]
     partial class Init
     {
         /// <inheritdoc />

@@ -22,7 +22,6 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
         // Configuring the TPH (Table-per-Hierarchy) for User hierarchy
         builder.Entity<User>()
             .HasDiscriminator<string>("UserType")
-            .HasValue<User>("User")
             .HasValue<Admin>("Admin")
             .HasValue<Commenter>("Commenter")
             .HasValue<Author>("Author");
