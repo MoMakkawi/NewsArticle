@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Identity;
 
 using Microsoft.EntityFrameworkCore;
 
+using NewsArticles.API.Application.Contracts;
 using NewsArticles.API.Persistence.Data;
 using NewsArticles.API.Persistence.Identity;
+using NewsArticles.API.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,8 @@ builder.Services.AddAuthorizationBuilder();
 builder.Services
     .AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<NewsArticleDBContext>();
+
+builder.Services.AddScoped(typeof(IBaseRepositoryAsync<>), typeof(BaseRepositoryAsync<>));
 
 var app = builder.Build();
 

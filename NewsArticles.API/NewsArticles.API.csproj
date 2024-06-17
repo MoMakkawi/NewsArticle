@@ -20,12 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Contracts\" />
     <Folder Include="Application\Features\" />
     <Folder Include="Domain\DTOs\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Persistence\Data\" />
-    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
 
 </Project>
