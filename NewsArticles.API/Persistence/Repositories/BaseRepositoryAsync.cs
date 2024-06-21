@@ -10,32 +10,32 @@ namespace NewsArticles.API.Persistence.Repositories;
 internal class BaseRepositoryAsync<T>(NewsArticleDBContext dbContext) : IBaseRepositoryAsync<T> where T : class
 {
     protected NewsArticleDBContext _dbContext { get; set; } = dbContext;
-    public async Task<T> CreateAsync(T item)
+    public async Task<T> CreateAsync(T item, CancellationToken ct)
     {
-        await _dbContext.Set<T>().AddAsync(item);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Set<T>().AddAsync(item, ct);
+        await _dbContext.SaveChangesAsync(ct);
 
         return item;
     }
 
-    public async Task<int> DeleteAsync(ValueType id)
+    public async Task<int> DeleteAsync(ValueType id, CancellationToken ct)
         => await _dbContext.Set<T>()
             .Where(FindByPrimaryKeyExpression(id))
-            .ExecuteDeleteAsync();
+            .ExecuteDeleteAsync(ct);
 
-    public async Task<List<T>> GetAllAsync()
+    public async Task<List<T>> GetAllAsync(CancellationToken ct)
         => await _dbContext.Set<T>()
-            .ToListAsync();
+            .ToListAsync(ct);
 
-    public async Task<T?> GetByIdAsync(ValueType id)
+    public async Task<T?> GetByIdAsync(ValueType id, CancellationToken ct)
         => await _dbContext.Set<T>()
-            .SingleOrDefaultAsync(FindByPrimaryKeyExpression(id));
+            .SingleOrDefaultAsync(FindByPrimaryKeyExpression(id), ct);
 
-    public async Task<T> UpdateAsync(ValueType id, T? entity)
+    public async Task<T> UpdateAsync(ValueType id, T? entity, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
-        var existingEntity = await GetByIdAsync(id)
+        var existingEntity = await GetByIdAsync(id, ct)
             ?? throw new KeyNotFoundException($"Entity with id {id} not found.");
 
         // Update the existing entity with values from the input entity
@@ -44,7 +44,7 @@ internal class BaseRepositoryAsync<T>(NewsArticleDBContext dbContext) : IBaseRep
         // Mark entity as modified
         _dbContext.Entry(existingEntity).State = EntityState.Modified;
 
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
 
         return existingEntity;
     }

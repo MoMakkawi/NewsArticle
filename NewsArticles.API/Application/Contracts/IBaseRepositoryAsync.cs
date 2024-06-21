@@ -2,9 +2,9 @@
 
 internal interface IBaseRepositoryAsync<T> where T : class
 {
-    Task<T> CreateAsync(T item);
-    Task<int> DeleteAsync(ValueType id);
-    Task<List<T>> GetAllAsync();
-    Task<T?> GetByIdAsync(ValueType id);
-    Task<T> UpdateAsync(ValueType id, T? entity);
+    Task<T> CreateAsync(T item, CancellationToken ct);
+    Task<int> DeleteAsync(ValueType id, CancellationToken ct);
+    Task<List<T>> GetAllAsync(CancellationToken ct);
+    Task<T?> GetByIdAsync(ValueType id, CancellationToken ct);
+    Task<T> UpdateAsync(ValueType id, T? entity, CancellationToken ct);
 }
