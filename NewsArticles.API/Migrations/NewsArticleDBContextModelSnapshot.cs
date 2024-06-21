@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsArticles.API.Persistence.Data;
 
@@ -12,11 +11,9 @@ using NewsArticles.API.Persistence.Data;
 namespace NewsArticles.API.Migrations
 {
     [DbContext(typeof(NewsArticleDBContext))]
-    [Migration("20240617080146_Init")]
-    partial class Init
+    partial class NewsArticleDBContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,7 +208,7 @@ namespace NewsArticles.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AuthorId")
+                    b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -222,11 +219,14 @@ namespace NewsArticles.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Views")
+                    b.Property<int>("ViewsCount")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -234,31 +234,6 @@ namespace NewsArticles.API.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("NewsArticles");
-                });
-
-            modelBuilder.Entity("NewsArticles.API.Domain.Entities.PublishedDetails", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("NewsArticleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("PublishedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("NewsArticleId")
-                        .IsUnique();
-
-                    b.ToTable("PublishedDetails");
                 });
 
             modelBuilder.Entity("NewsArticles.API.Persistence.Identity.User", b =>
@@ -436,35 +411,24 @@ namespace NewsArticles.API.Migrations
 
             modelBuilder.Entity("NewsArticles.API.Domain.Entities.Interaction", b =>
                 {
-                    b.HasOne("NewsArticles.API.Persistence.Identity.Commenter", null)
+                    b.HasOne("NewsArticles.API.Persistence.Identity.Commenter", "Commenter")
                         .WithMany()
                         .HasForeignKey("CommenterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("NewsArticles.API.Domain.Entities.NewsArticle", null)
-                        .WithMany("Interaction")
+                        .WithMany("Interactions")
                         .HasForeignKey("NewsArticleId");
+
+                    b.Navigation("Commenter");
                 });
 
             modelBuilder.Entity("NewsArticles.API.Domain.Entities.NewsArticle", b =>
                 {
-                    b.HasOne("NewsArticles.API.Persistence.Identity.Author", null)
-                        .WithMany("NewsArticles")
-                        .HasForeignKey("AuthorId");
-                });
-
-            modelBuilder.Entity("NewsArticles.API.Domain.Entities.PublishedDetails", b =>
-                {
                     b.HasOne("NewsArticles.API.Persistence.Identity.Author", "Author")
-                        .WithMany()
+                        .WithMany("NewsArticles")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NewsArticles.API.Domain.Entities.NewsArticle", null)
-                        .WithOne("PublishedDetails")
-                        .HasForeignKey("NewsArticles.API.Domain.Entities.PublishedDetails", "NewsArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -475,10 +439,7 @@ namespace NewsArticles.API.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Interaction");
-
-                    b.Navigation("PublishedDetails")
-                        .IsRequired();
+                    b.Navigation("Interactions");
                 });
 
             modelBuilder.Entity("NewsArticles.API.Persistence.Identity.Author", b =>

@@ -167,9 +167,10 @@ namespace NewsArticles.API.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Views = table.Column<int>(type: "int", nullable: false),
+                    ViewsCount = table.Column<int>(type: "int", nullable: false),
                     ImagePaths = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,7 +179,8 @@ namespace NewsArticles.API.Migrations
                         name: "FK_NewsArticles_AspNetUsers_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,32 +231,6 @@ namespace NewsArticles.API.Migrations
                         column: x => x.NewsArticleId,
                         principalTable: "NewsArticles",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PublishedDetails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NewsArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PublishedDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PublishedDetails_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PublishedDetails_NewsArticles_NewsArticleId",
-                        column: x => x.NewsArticleId,
-                        principalTable: "NewsArticles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -320,17 +296,6 @@ namespace NewsArticles.API.Migrations
                 name: "IX_NewsArticles_AuthorId",
                 table: "NewsArticles",
                 column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PublishedDetails_AuthorId",
-                table: "PublishedDetails",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PublishedDetails_NewsArticleId",
-                table: "PublishedDetails",
-                column: "NewsArticleId",
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -356,9 +321,6 @@ namespace NewsArticles.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Interaction");
-
-            migrationBuilder.DropTable(
-                name: "PublishedDetails");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
