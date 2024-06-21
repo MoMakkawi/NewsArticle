@@ -26,40 +26,28 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
             .HasValue<Commenter>("Commenter")
             .HasValue<Author>("Author");
 
-        builder.Entity<Author>()
-            .HasMany(x => x.NewsArticles)
-            .WithOne();
-
         builder.Entity<Commenter>()
             .HasMany<Comment>()
-            .WithOne(x =>x.Commenter)
+            .WithOne(x => x.Commenter)
             .HasForeignKey(x => x.CommenterId);
 
         builder.Entity<Commenter>()
             .HasMany<Interaction>()
-            .WithOne()
+            .WithOne(x => x.Commenter)
             .HasForeignKey(x => x.CommenterId);
 
-
-
-        builder.Entity<PublishedDetails>()
-            .HasOne(x => x.Author)
-            .WithMany()
+        builder.Entity<Author>()
+            .HasMany(x => x.NewsArticles)
+            .WithOne(x => x.Author)
             .HasForeignKey(x => x.AuthorId);
 
         builder.Entity<NewsArticle>()
-            .HasMany(x => x.Interaction)
+            .HasMany(x => x.Interactions)
             .WithOne();
 
         builder.Entity<NewsArticle>()
             .HasMany(x => x.Comments)
             .WithOne();
-
-        builder.Entity<PublishedDetails>()
-            .HasOne<NewsArticle>()
-            .WithOne(x => x.PublishedDetails)
-            .HasForeignKey<PublishedDetails>(x => x.NewsArticleId);
-
 
         base.OnModelCreating(builder);
     }
