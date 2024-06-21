@@ -1,8 +1,11 @@
+using System.Reflection;
+
 using Microsoft.AspNetCore.Identity;
 
 using Microsoft.EntityFrameworkCore;
 
 using NewsArticles.API.Application.Contracts;
+using NewsArticles.API.Endpoints;
 using NewsArticles.API.Persistence.Data;
 using NewsArticles.API.Persistence.Identity;
 using NewsArticles.API.Persistence.Repositories;
@@ -25,6 +28,8 @@ builder.Services
     .AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<NewsArticleDBContext>();
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
 builder.Services.AddScoped(typeof(IBaseRepositoryAsync<>), typeof(BaseRepositoryAsync<>));
 
 var app = builder.Build();
@@ -36,6 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapNewsArticlesEndpoints();
+
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
 
@@ -43,3 +50,5 @@ app.UseAuthentication()
    .UseAuthorization();
 
 app.Run();
+
+
