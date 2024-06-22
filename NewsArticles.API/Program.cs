@@ -1,9 +1,7 @@
-using System.Reflection;
-
 using Microsoft.AspNetCore.Identity;
 
 using Microsoft.EntityFrameworkCore;
-
+using NewsArticles.API.Application;
 using NewsArticles.API.Application.Contracts;
 using NewsArticles.API.Endpoints;
 using NewsArticles.API.Persistence.Data;
@@ -28,7 +26,7 @@ builder.Services
     .AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<NewsArticleDBContext>();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddApplicationServices();
 
 builder.Services.AddScoped(typeof(IBaseRepositoryAsync<>), typeof(BaseRepositoryAsync<>));
 
