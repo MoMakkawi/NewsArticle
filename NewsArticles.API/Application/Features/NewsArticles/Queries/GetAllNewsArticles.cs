@@ -20,7 +20,7 @@ internal sealed class GetAllNewsArticlesHandler(IBaseRepositoryAsync<NewsArticle
         var newsArticleDTOs = newsArticles
             .Select(newsArticle => newsArticle.Adapt<NewsArticleWithAuthorDTO>() with
             {
-                AuthorDTO = newsArticle.Author.Adapt<AuthorDTO>()
+                AuthorDTO = newsArticle.Author.Adapt<AuthorDTO>(),
             });
 
         return new GetAllNewsArticlesViewModel(newsArticleDTOs);
