@@ -8,7 +8,6 @@ internal sealed record NewsArticleDTO(
     int ViewsCount,
     int InteractionsCount,
     int CommentsCount,
-
     DateTime PublishedDate);
 
 internal sealed record NewsArticleWithAuthorDTO(
@@ -19,7 +18,20 @@ internal sealed record NewsArticleWithAuthorDTO(
     int ViewsCount,
     int InteractionsCount,
     int CommentsCount,
-
     DateTime PublishedDate,
 
     AuthorDTO AuthorDTO);
+
+internal sealed record NewsArticleDetailedDTO(
+    Guid Id,
+    string Title,
+    string Content,
+    List<string> ImagePaths,
+    int ViewsCount,
+    DateTime PublishedDate,
+    int InteractionsCount,
+    int CommentsCount,
+    AuthorDTO AuthorDTO,
+
+    List<InteractionDTO> InteractionDTOs,
+    List<CommentDTO> CommentDTOs);
