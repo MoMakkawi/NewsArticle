@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NewsArticles.API.Application;
 using NewsArticles.API.Application.Contracts;
+using NewsArticles.API.Application.Profiles;
 using NewsArticles.API.Endpoints;
+using NewsArticles.API.Persistence;
 using NewsArticles.API.Persistence.Data;
 using NewsArticles.API.Persistence.Identity;
 using NewsArticles.API.Persistence.Repositories;
@@ -14,10 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<NewsArticleDBContext>(options =>
-    options
-    .UseSqlServer(builder.Configuration.GetConnectionString("LocalContext") ??
-    throw new InvalidOperationException("Connection string 'LocalContext' not found.")));
+builder.AddPersistenceServices()
+    .AddApplicationServices();
 
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme);
 builder.Services.AddAuthorizationBuilder();
@@ -25,10 +25,6 @@ builder.Services.AddAuthorizationBuilder();
 builder.Services
     .AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<NewsArticleDBContext>();
-
-builder.Services.AddApplicationServices();
-
-builder.Services.AddScoped(typeof(IBaseRepositoryAsync<>), typeof(BaseRepositoryAsync<>));
 
 var app = builder.Build();
 
