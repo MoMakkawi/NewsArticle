@@ -12,5 +12,11 @@ public static class MapsterProfile
             .NewConfig()
             .Map(dest => dest.CommentsCount, src => src.Comments.Count)
             .Map(dest => dest.InteractionsCount, src => src.Interactions.Count);
+
+        TypeAdapterConfig<NewsArticle, NewsArticleWithAuthorDTO>
+            .NewConfig()
+            .Map(dest => dest.CommentsCount, src => src.Comments.Count)
+            .Map(dest => dest.InteractionsCount, src => src.Interactions.Count)
+            .Map(dest => dest.AuthorDTO, src => src.Author.Adapt<AuthorDTO>());
     }
 }
