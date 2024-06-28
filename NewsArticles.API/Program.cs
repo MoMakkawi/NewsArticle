@@ -1,14 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 
-using Microsoft.EntityFrameworkCore;
-using NewsArticles.API.Application;
-using NewsArticles.API.Application.Contracts;
 using NewsArticles.API.Application.Profiles;
 using NewsArticles.API.Endpoints;
 using NewsArticles.API.Persistence;
 using NewsArticles.API.Persistence.Data;
 using NewsArticles.API.Persistence.Identity;
-using NewsArticles.API.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.AddPersistenceServices()
+builder
+    .AddPersistenceServices()
     .AddApplicationServices();
-
+    
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme);
 builder.Services.AddAuthorizationBuilder();
 
@@ -35,13 +32,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapNewsArticlesEndpoints();
+// Manually get the `wwwroot` path
+app.UseStaticFiles();
 
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
 
 app.UseAuthentication()
    .UseAuthorization();
+
+var newsArticleDBContext = app.Services
+    .CreateScope()
+    .ServiceProvider
+    .GetRequiredService<NewsArticleDBContext>();
+
+Seeders.SeedData(newsArticleDBContext);
+
+app.MapNewsArticlesEndpoints();
 
 app.Run();
 

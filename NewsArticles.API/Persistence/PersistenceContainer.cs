@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using NewsArticles.API.Application.Contracts;
+using NewsArticles.API.Application.Services;
 using NewsArticles.API.Persistence.Data;
 using NewsArticles.API.Persistence.Repositories;
 
@@ -16,6 +17,7 @@ public static class PersistenceContainer
                 throw new InvalidOperationException("Connection string 'LocalContext' not found.")));
 
         builder.Services.AddScoped(typeof(IBaseRepositoryAsync<>), typeof(BaseRepositoryAsync<>));
+        builder.Services.AddScoped<IImageServiceAsync, ImageServiceAsync>();
 
         return builder.Services;
     }
