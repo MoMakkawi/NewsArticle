@@ -30,7 +30,19 @@ internal sealed class ImageServiceAsync(IWebHostEnvironment env) : IImageService
         using var stream = new FileStream(fullImagePath, FileMode.Create);
             await image.CopyToAsync(stream);
 
-        return fullImagePath;
+        return image.FileName;
+    }
+
+    public async Task<List<string>> SaveAsync(List<IFormFile>? images)
+    {
+        if (images is null) return [];
+
+        var saveTasks = images
+            .Select(async image => await SaveAsync(image));
+
+        var savedImagesNames = await Task.WhenAll(saveTasks);
+
+        return [.. savedImagesNames];
     }
 
     public async Task<string> UpdateAsync(string oldImageName, IFormFile newImage)

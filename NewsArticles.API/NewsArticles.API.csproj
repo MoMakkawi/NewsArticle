@@ -23,8 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Features\NewsArticles\Commands\" />
-    <Folder Include="Persistence\Data\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
