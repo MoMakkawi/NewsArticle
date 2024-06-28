@@ -8,7 +8,7 @@ public class NewsArticle
     public required string Title { get; set; }
     public required string Content { get; set; }
     public required int ViewsCount {  get; set; }
-    public required List<string> ImagePaths { get; set; } = [];
+    public required List<string> ImagesNames { get; set; } = [];
     public DateTime PublishedDate { get; set; }
 
     public virtual ICollection<Interaction> Interactions { get; set; } = [];
