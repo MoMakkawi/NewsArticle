@@ -18,6 +18,9 @@ namespace NewsArticles.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -215,7 +218,7 @@ namespace NewsArticles.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePaths")
+                    b.Property<string>("ImagesNames")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -287,7 +290,7 @@ namespace NewsArticles.API.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProfileImagePath")
+                    b.Property<string>("ProfileImageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")

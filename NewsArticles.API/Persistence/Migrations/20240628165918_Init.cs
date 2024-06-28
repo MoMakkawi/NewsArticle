@@ -32,7 +32,7 @@ namespace NewsArticles.API.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfileImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfileImageName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserType = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -168,7 +168,7 @@ namespace NewsArticles.API.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ViewsCount = table.Column<int>(type: "int", nullable: false),
-                    ImagePaths = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagesNames = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
