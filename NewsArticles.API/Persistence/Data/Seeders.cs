@@ -75,8 +75,8 @@ internal static class Seeders
                 Id = Guid.Parse("8f8b53ab-9381-4d25-1e48-08dc978c994e"),
                 Author = Authors.Last(),
                 AuthorId = Authors.Last().Id,
-                Content = "Second Article Content",
-                Title = "Second Article Title",
+                Content = "Third Article Content",
+                Title = "Third Article Title",
                 PublishedDate = DateTime.Now.AddMonths(1),
                 ViewsCount = 1,
                 ImagesNames = ["Pic1.png"]
