@@ -30,12 +30,12 @@ internal sealed record CreateNewsArticleResponse(
 internal sealed class CreateNewsArticlesHandler(
     IBaseRepositoryAsync<NewsArticle> newsArticlesRepository,
     IImageServiceAsync imageServiceAsync,
-    IBaseRepositoryAsync<Author> AuthorRepository)
+    IBaseRepositoryAsync<Author> authorRepository)
     : IRequestHandler<CreateNewsArticleCommand, CreateNewsArticleResponse>
 {
     public async Task<CreateNewsArticleResponse> Handle(CreateNewsArticleCommand request, CancellationToken cancellationToken)
     {
-        var author = await AuthorRepository.GetByIdAsync(request.AuthorId, cancellationToken)
+        var author = await authorRepository.GetByIdAsync(request.AuthorId, cancellationToken)
             ?? throw new ArgumentException("There no Author with the input Id.");
 
         var savedImagesNames = await imageServiceAsync.SaveAsync(request.Images);

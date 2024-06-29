@@ -21,12 +21,12 @@ internal sealed record UpdateNewsArticleResponse(string Message);
 internal sealed class UpdateNewsArticlesHandler(
     IBaseRepositoryAsync<NewsArticle> newsArticlesRepository,
     IImageServiceAsync imageServiceAsync,
-    IBaseRepositoryAsync<Author> AuthorRepository)
+    IBaseRepositoryAsync<Author> authorRepository)
     : IRequestHandler<UpdateNewsArticleCommand, UpdateNewsArticleResponse>
 {
     public async Task<UpdateNewsArticleResponse> Handle(UpdateNewsArticleCommand request, CancellationToken cancellationToken)
     {
-        var author = await AuthorRepository.GetByIdAsync(request.AuthorId, cancellationToken)
+        var author = await authorRepository.GetByIdAsync(request.AuthorId, cancellationToken)
             ?? throw new ArgumentException("There no Author with the input Id.");
 
         var newsArticle = await newsArticlesRepository.GetByIdAsync(request.Id, cancellationToken)
