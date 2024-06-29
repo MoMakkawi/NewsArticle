@@ -14,8 +14,11 @@ internal sealed record CreateNewsArticleCommand(
     string Title,
     string Content,
     DateTime PublishedDate,
-    List<IFormFile>? Images)
-    : IRequest<CreateNewsArticleResponse>;
+    IFormFileCollection? Images)
+    : IRequest<CreateNewsArticleResponse>
+{
+    public readonly int ViewsCount = 1;
+}
 
 internal sealed record CreateNewsArticleResponse(
     Guid Id,
@@ -43,7 +46,7 @@ internal sealed class CreateNewsArticlesHandler(
 
         var savedNewsArticle = await newsArticlesRepository.CreateAsync(newsArticle, cancellationToken);
 
-        return savedImagesNames.Adapt<CreateNewsArticleResponse>();
+        return savedNewsArticle.Adapt<CreateNewsArticleResponse>();
 
     }
 }

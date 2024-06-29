@@ -23,6 +23,8 @@ builder.Services
     .AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<NewsArticleDBContext>();
 
+//builder.Services.AddAntiforgery();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,8 +34,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Manually get the `wwwroot` path
 app.UseStaticFiles();
+
+//app.UseAntiforgery();
 
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();

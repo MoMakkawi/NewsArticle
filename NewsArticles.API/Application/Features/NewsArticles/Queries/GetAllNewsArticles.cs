@@ -17,11 +17,7 @@ internal sealed class GetAllNewsArticlesHandler(IBaseRepositoryAsync<NewsArticle
     {
         var newsArticles = await newsArticlesRepository.GetAllAsync(cancellationToken);
 
-        var newsArticleDTOs = newsArticles
-            .Select(newsArticle => newsArticle.Adapt<NewsArticleWithAuthorDTO>() with
-            {
-                AuthorDTO = newsArticle.Author.Adapt<AuthorDTO>(),
-            });
+        var newsArticleDTOs = newsArticles.Adapt<IEnumerable<NewsArticleWithAuthorDTO>>();
 
         return new GetAllNewsArticlesViewModel(newsArticleDTOs);
     }
