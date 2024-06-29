@@ -4,7 +4,7 @@ internal sealed record AuthorDTO(
     Guid Id,
     string FirstName,
     string LastName,
-    string? ProfileImagePath,
+    string? ProfileImageName,
     string Email,
     string PhoneNumber);
 
@@ -12,7 +12,7 @@ internal sealed record AuthorWithNewsArticlesDTO(
     Guid Id,
     string FirstName,
     string LastName,
-    string? ProfileImagePath,
+    string? ProfileImageName,
     string Email,
     string PhoneNumber,
 

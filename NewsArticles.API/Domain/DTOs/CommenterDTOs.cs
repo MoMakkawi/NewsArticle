@@ -4,6 +4,6 @@ internal sealed record CommenterDTO(
     Guid Id,
     string FirstName,
     string LastName,
-    string? ProfileImagePath,
+    string? ProfileImageName,
     string Email,
     string PhoneNumber);
