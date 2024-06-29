@@ -38,5 +38,15 @@ internal static class NewsArticlesEndpoints
         })
         .WithName("delete news article command")
         .WithOpenApi();
+
+        group.MapPut("/", async ([FromServices] ISender mediatr, [FromForm] UpdateNewsArticleCommand updateNewsArticleCommand) =>
+        {
+            var newsArticlesVM = await mediatr.Send(updateNewsArticleCommand);
+            return Results.Ok(newsArticlesVM);
+        })
+        .DisableAntiforgery()
+        .Accepts<UpdateNewsArticleCommand>("multipart/form-data")
+        .WithName("update news article command")
+        .WithOpenApi();
     }
 }
