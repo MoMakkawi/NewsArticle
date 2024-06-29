@@ -30,5 +30,13 @@ internal static class NewsArticlesEndpoints
         .Accepts<CreateNewsArticleCommand>("multipart/form-data")
         .WithName("add news article command")
         .WithOpenApi();
+
+        group.MapDelete("/", async ([FromServices] ISender mediatr, DeleteNewsArticleRequest deleteNewsArticleRequest) =>
+        {
+            var newsArticlesVM = await mediatr.Send(deleteNewsArticleRequest);
+            return Results.Ok(newsArticlesVM);
+        })
+        .WithName("delete news article command")
+        .WithOpenApi();
     }
 }

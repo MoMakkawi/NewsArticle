@@ -12,6 +12,15 @@ internal sealed class ImageServiceAsync(IWebHostEnvironment env) : IImageService
         File.Delete(GetFullImagePath(imageName));
         return Task.CompletedTask;
     }
+    public async Task DeleteAsync(List<string>? imagesNames)
+    {
+        if(imagesNames is null) return;
+
+        var deleteTasks = imagesNames
+            .Select(async imageName => await DeleteAsync(imageName));
+
+        await Task.WhenAll(deleteTasks);
+    }
 
     public Task<byte[]> GetAsByteArrayAsync(string imageName)
     {
