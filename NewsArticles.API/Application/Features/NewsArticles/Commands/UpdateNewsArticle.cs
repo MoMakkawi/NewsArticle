@@ -14,10 +14,7 @@ internal sealed record UpdateNewsArticleCommand(
     string Content,
     DateTime PublishedDate,
     IFormFileCollection? Images)
-    : IRequest<UpdateNewsArticleResponse>
-{
-    public readonly int ViewsCount = 1;
-}
+    : IRequest<UpdateNewsArticleResponse>;
 
 internal sealed record UpdateNewsArticleResponse(string Message);
 
