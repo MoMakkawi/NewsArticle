@@ -21,6 +21,14 @@ internal static class NewsArticlesEndpoints
         .WithName("get all news articles")
         .WithOpenApi();
 
+        group.MapGet("/{id:guid}", async ([FromServices] ISender mediatr, Guid Id) =>
+        {
+            var detailedNewsArticlesVM = await mediatr.Send(new GetDetailedNewsArticleQuery(Id));
+            return Results.Ok(detailedNewsArticlesVM);
+        })
+        .WithName("get detailed news articles")
+        .WithOpenApi();
+
         group.MapPost("/", async ([FromServices] ISender mediatr, [FromForm] CreateNewsArticleCommand createNewsArticleCommand) =>
         {
             var newsArticlesVM = await mediatr.Send(createNewsArticleCommand);
@@ -31,9 +39,9 @@ internal static class NewsArticlesEndpoints
         .WithName("add news article command")
         .WithOpenApi();
 
-        group.MapDelete("/", async ([FromServices] ISender mediatr, DeleteNewsArticleRequest deleteNewsArticleRequest) =>
+        group.MapDelete("/{id:guid}", async ([FromServices] ISender mediatr, Guid Id) =>
         {
-            var newsArticlesVM = await mediatr.Send(deleteNewsArticleRequest);
+            var newsArticlesVM = await mediatr.Send(new DeleteNewsArticleRequest(Id));
             return Results.Ok(newsArticlesVM);
         })
         .WithName("delete news article command")
