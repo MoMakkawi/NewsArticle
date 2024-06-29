@@ -33,7 +33,7 @@ internal sealed class ImageServiceAsync(IWebHostEnvironment env) : IImageService
         return image.FileName;
     }
 
-    public async Task<List<string>> SaveAsync(List<IFormFile>? images)
+    public async Task<List<string>> SaveAsync(IFormFileCollection? images)
     {
         if (images is null) return [];
 
