@@ -21,6 +21,6 @@ internal sealed class DeleteNewsArticleHandler(
         await imageServiceAsync.DeleteAsync(newsArticle.ImagesNames);
         await newsArticlesRepository.DeleteAsync(newsArticle.Id, cancellationToken);
 
-        return new DeleteNewsArticleResponse("News article by Id deleted succesfully.");
+        return new DeleteNewsArticleResponse("News article by Id deleted successfully.");
     }
 }
