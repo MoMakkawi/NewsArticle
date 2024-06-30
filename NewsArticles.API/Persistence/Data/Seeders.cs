@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-using NewsArticles.API.Domain.Entities;
+﻿using NewsArticles.API.Domain.Entities;
 using NewsArticles.API.Persistence.Identity;
 
 namespace NewsArticles.API.Persistence.Data;
@@ -9,6 +7,7 @@ internal static class Seeders
 {
     private readonly static Admin Admin = new()
     {
+        Id = Guid.Parse("61441ae2-2850-4bc6-6134-08dc9cc80f95"),
         FirstName = "NewsArticles Website Admin",
         LastName = "MoMakkawi",
         Email = "MoMakkawi@hotmail.com",
@@ -47,6 +46,35 @@ internal static class Seeders
                 NewsArticles = []
             }
             ];
+    private readonly static List<Commenter> Commenters = [
+        new()
+            {
+                Id = Guid.Parse("5208D585-FFAA-47F4-B25D-F9D577EC4085"),
+                FirstName = "Commenter",
+                LastName = "1",
+                Email = "Commenter1@hotmail.com",
+                UserName = "Commenter1",
+                PhoneNumber = "12062346645"
+            },
+            new()
+            {
+                Id = Guid.Parse("FEEAB2D5-0824-4CBB-BCA4-09979D7CD097"),
+                FirstName = "Commenter",
+                LastName = "2",
+                Email = "Commenter2@hotmail.com",
+                UserName = "Commenter2",
+                PhoneNumber = "952345959"
+            },
+            new()
+            {
+                Id = Guid.Parse("B7DE5136-9646-4180-B750-4C5F672FD392"),
+                FirstName = "Commenter",
+                LastName = "3",
+                Email = "Commenter3@hotmail.com",
+                UserName = "Commenter3",
+                PhoneNumber = "494985498498"
+            }
+        ];
     private readonly static List<NewsArticle> NewsArticles = [
             new NewsArticle()
             {
@@ -90,11 +118,19 @@ internal static class Seeders
             .Any(admin => admin.Id == Admin.Id))
             newsArticleDBContext.Add(Admin);
 
+        // seed authors 
         var unseededAuthors = Authors
             .Where(author => !newsArticleDBContext.Authors.Any(savedAuthor => savedAuthor.Id == author.Id));
             
         newsArticleDBContext.AddRange(unseededAuthors);
 
+        // seed commenters 
+        var unseededCommenter = Commenters
+            .Where(commenter => !newsArticleDBContext.Commenters.Any(savedCommenter => savedCommenter.Id == commenter.Id));
+
+        newsArticleDBContext.AddRange(unseededCommenter);
+
+        // seed news articles
         var unseededNewsArticles = NewsArticles
             .Where(newsArticle => !newsArticleDBContext.NewsArticles.Any(savedNewsArticle => savedNewsArticle.Id == newsArticle.Id));
 
