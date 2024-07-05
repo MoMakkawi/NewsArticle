@@ -10,7 +10,7 @@ namespace NewsArticles.API.Endpoints;
 
 internal static class InteractionsEndpoints
 {
-    public static void MapCommentsEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapInteractionsEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/api/Interactions").WithTags(nameof(Interaction));
 

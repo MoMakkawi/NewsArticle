@@ -23,8 +23,6 @@ builder.Services
     .AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<NewsArticleDBContext>();
 
-//builder.Services.AddAntiforgery();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,8 +33,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
-
-//app.UseAntiforgery();
 
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
@@ -53,6 +49,7 @@ Seeders.SeedData(newsArticleDBContext);
 
 app.MapNewsArticlesEndpoints();
 app.MapCommentsEndpoints();
+app.MapInteractionsEndpoints();
 
 app.Run();
 
