@@ -20,5 +20,14 @@ internal static class CommentsEndpoints
         })
         .WithName("add new comment command")
         .WithOpenApi();
+
+
+        group.MapDelete("/{id:guid}", async ([FromServices] ISender mediatr, Guid Id) =>
+        {
+            var deleteCommentVM = await mediatr.Send(new DeleteCommentRequest(Id));
+            return Results.Ok(deleteCommentVM);
+        })
+        .WithName("delete comment command")
+        .WithOpenApi();
     }
 }
