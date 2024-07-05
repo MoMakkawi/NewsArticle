@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using NewsArticles.API.Application.Features.Comments.Commands;
+using NewsArticles.API.Application.Features.NewsArticles.Commands;
 using NewsArticles.API.Domain.Entities;
 
 namespace NewsArticles.API.Endpoints;
@@ -28,6 +29,14 @@ internal static class CommentsEndpoints
             return Results.Ok(deleteCommentVM);
         })
         .WithName("delete comment command")
+        .WithOpenApi();
+
+        group.MapPut("/", async ([FromServices] ISender mediatr, UpdateCommentCommand updateCommentCommand) =>
+        {
+            var newsArticlesVM = await mediatr.Send(updateCommentCommand);
+            return Results.Ok(newsArticlesVM);
+        })
+        .WithName("update Comment command")
         .WithOpenApi();
     }
 }
