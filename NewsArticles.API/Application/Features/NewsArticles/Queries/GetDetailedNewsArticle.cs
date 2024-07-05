@@ -36,8 +36,8 @@ internal sealed class GetDetailedNewsArticleHandler(IBaseRepositoryAsync<NewsArt
         return detailedNewsArticle.Adapt<GetDetailedNewsArticleViewModel>() with
         { 
             AuthorDTO = detailedNewsArticle.AuthorDTO,
-            CommentDTOs = detailedNewsArticle.CommentDTOs,
-            InteractionDTOs = detailedNewsArticle.InteractionDTOs
+            CommentDTOs = newsArticle.Comments.Adapt<List<CommentDTO>>(),
+            InteractionDTOs = newsArticle.Interactions.Adapt<List<InteractionDTO>>(),
         };
     }
 }
