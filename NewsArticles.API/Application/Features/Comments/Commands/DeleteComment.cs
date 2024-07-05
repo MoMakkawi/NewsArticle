@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using NewsArticles.API.Application.Contracts;
-
 using NewsArticles.API.Domain.Entities;
 namespace NewsArticles.API.Application.Features.Comments.Commands;
 
