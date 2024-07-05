@@ -31,6 +31,6 @@ internal sealed class CreateCommentHandler(
 
         await newsArticlesRepository.UpdateAsync(newsArticle.Id, newsArticle, cancellationToken);
 
-        return new CreateCommentResponse("Comment added to the news article repository");
+        return new CreateCommentResponse("Comment added to the news article");
     }
 }
