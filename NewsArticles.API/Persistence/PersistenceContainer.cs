@@ -16,7 +16,6 @@ public static class PersistenceContainer
             .UseSqlServer(builder.Configuration.GetConnectionString("LocalContext") ??
                 throw new InvalidOperationException("Connection string 'LocalContext' not found.")));
 
-        builder.Services.AddScoped(typeof(IBaseRepositoryAsync<>), typeof(BaseRepositoryAsync<>));
         builder.Services.AddScoped<IImageServiceAsync, ImageServiceAsync>();
 
         return builder.Services;
