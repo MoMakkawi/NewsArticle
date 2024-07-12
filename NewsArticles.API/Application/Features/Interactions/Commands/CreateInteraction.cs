@@ -1,5 +1,6 @@
-﻿using MediatR;
-using NewsArticles.API.Application.Contracts;
+﻿using GenericServices;
+
+using MediatR;
 using NewsArticles.API.Domain.Entities;
 using NewsArticles.API.Persistence.Identity;
 
@@ -9,17 +10,15 @@ internal sealed record CreateInteractionCommand(Guid CommenterId, Guid ArticleId
     public readonly InteractionType InteractionType = InteractionType.Like;
 }
 internal sealed record CreateInteractionResponse(string Message);
-internal sealed class CreateInteractionHandler(
-    IBaseRepositoryAsync<NewsArticle> newsArticlesRepository,
-    IBaseRepositoryAsync<Commenter> commenterRepository)
+internal sealed class CreateInteractionHandler(ICrudServicesAsync servicesAsync)
     : IRequestHandler<CreateInteractionCommand, CreateInteractionResponse>
 {
     public async Task<CreateInteractionResponse> Handle(CreateInteractionCommand request, CancellationToken cancellationToken)
     {
-        var commenter = await commenterRepository.GetByIdAsync(request.CommenterId, cancellationToken)
+        var commenter = await servicesAsync.ReadSingleAsync<Commenter>(request.CommenterId)
             ?? throw new ArgumentException("There no Commenter with the input Id.");
 
-        var newsArticle = await newsArticlesRepository.GetByIdAsync(request.ArticleId, cancellationToken)
+        var newsArticle = await servicesAsync.ReadSingleAsync<NewsArticle>(request.ArticleId)
             ?? throw new ArgumentException("There no news article with the input Id.");
 
         var interaction = new Interaction()
@@ -31,7 +30,7 @@ internal sealed class CreateInteractionHandler(
 
         newsArticle.Interactions.Add(interaction);
 
-        await newsArticlesRepository.UpdateAsync(newsArticle.Id, newsArticle, cancellationToken);
+        await servicesAsync.CreateAndSaveAsync(interaction);
 
         return new CreateInteractionResponse("Interaction added to the news article");
     }
