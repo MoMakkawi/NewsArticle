@@ -3,7 +3,6 @@
 using NewsArticles.API.Application.Contracts;
 using NewsArticles.API.Application.Services;
 using NewsArticles.API.Persistence.Data;
-using NewsArticles.API.Persistence.Repositories;
 
 namespace NewsArticles.API.Persistence;
 
