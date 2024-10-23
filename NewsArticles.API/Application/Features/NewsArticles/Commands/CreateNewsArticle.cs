@@ -1,53 +1,52 @@
-﻿using Mapster;
+﻿//using GenericServices;
 
-using MediatR;
+//using Mapster;
 
-using NewsArticles.API.Application.Contracts;
-using NewsArticles.API.Domain.Entities;
-using NewsArticles.API.Persistence.Identity;
+//using MediatR;
 
-namespace NewsArticles.API.Application.Features.NewsArticles.Commands;
+//using NewsArticles.API.Application.Contracts;
+//using NewsArticles.API.Domain.Entities;
+//using NewsArticles.API.Persistence.Identity;
 
-internal sealed record CreateNewsArticleCommand(
-    Guid AuthorId,
+//namespace NewsArticles.API.Application.Features.NewsArticles.Commands;
 
-    string Title,
-    string Content,
-    DateTime PublishedDate,
-    IFormFileCollection? Images)
-    : IRequest<CreateNewsArticleResponse>
-{
-    public readonly int ViewsCount = 1;
-}
+//internal sealed record CreateNewsArticleCommand(
+//    Guid AuthorId,
 
-internal sealed record CreateNewsArticleResponse(
-    Guid Id,
-    string Title,
-    string Content,
-    List<string> ImagesNames,
-    DateTime PublishedDate);
+//    string Title,
+//    string Content,
+//    DateTime PublishedDate,
+//    IFormFileCollection? Images)
+//    : IRequest<CreateNewsArticleResponse>
+//{
+//    public readonly int ViewsCount = 1;
+//}
 
-internal sealed class CreateNewsArticlesHandler(
-    IBaseRepositoryAsync<NewsArticle> newsArticlesRepository,
-    IImageServiceAsync imageServiceAsync,
-    IBaseRepositoryAsync<Author> authorRepository)
-    : IRequestHandler<CreateNewsArticleCommand, CreateNewsArticleResponse>
-{
-    public async Task<CreateNewsArticleResponse> Handle(CreateNewsArticleCommand request, CancellationToken cancellationToken)
-    {
-        var author = await authorRepository.GetByIdAsync(request.AuthorId, cancellationToken)
-            ?? throw new ArgumentException("There no Author with the input Id.");
+//internal sealed record CreateNewsArticleResponse(
+//    Guid Id,
+//    string Title,
+//    string Content,
+//    List<string> ImagesNames,
+//    DateTime PublishedDate);
 
-        var savedImagesNames = await imageServiceAsync.SaveAsync(request.Images);
+//internal sealed class CreateNewsArticlesHandler(ICrudServicesAsync servicesAsync, IImageServiceAsync imageServiceAsync)
+//    : IRequestHandler<CreateNewsArticleCommand, CreateNewsArticleResponse>
+//{
+//    public async Task<CreateNewsArticleResponse> Handle(CreateNewsArticleCommand request, CancellationToken cancellationToken)
+//    {
+//        var author = await servicesAsync.ReadSingleAsync<Author>(request.AuthorId)
+//            ?? throw new ArgumentException("There no Author with the input Id.");
 
-        var newsArticle = request.Adapt<NewsArticle>();
-        newsArticle.ImagesNames = savedImagesNames;
-        newsArticle.Author = author;
+//        var savedImagesNames = await imageServiceAsync.SaveAsync(request.Images);
 
-        var savedNewsArticle = await newsArticlesRepository.CreateAsync(newsArticle, cancellationToken);
+//        var newsArticle = request.Adapt<NewsArticle>();
+//        newsArticle.ImagesNames = savedImagesNames;
+//        newsArticle.Author = author;
 
-        return savedNewsArticle.Adapt<CreateNewsArticleResponse>();
+//        var savedNewsArticle = await servicesAsync.CreateAndSaveAsync(newsArticle);
 
-    }
-}
+//        return savedNewsArticle.Adapt<CreateNewsArticleResponse>();
+
+//    }
+//}
 

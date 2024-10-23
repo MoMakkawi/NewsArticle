@@ -47,7 +47,7 @@ var newsArticleDBContext = app.Services
 
 Seeders.SeedData(newsArticleDBContext);
 
-app.MapNewsArticlesEndpoints();
+//app.MapNewsArticlesEndpoints();
 app.MapCommentsEndpoints();
 app.MapInteractionsEndpoints();
 

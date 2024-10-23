@@ -1,26 +1,26 @@
-﻿using MediatR;
+﻿//using GenericServices;
 
-using NewsArticles.API.Application.Contracts;
-using NewsArticles.API.Domain.Entities;
+//using MediatR;
 
-namespace NewsArticles.API.Application.Features.NewsArticles.Commands;
+//using NewsArticles.API.Application.Contracts;
+//using NewsArticles.API.Domain.Entities;
 
-internal sealed record DeleteNewsArticleRequest(Guid Id) : IRequest<DeleteNewsArticleResponse>;
-internal sealed record DeleteNewsArticleResponse(string Message);
+//namespace NewsArticles.API.Application.Features.NewsArticles.Commands;
 
-internal sealed class DeleteNewsArticleHandler(
-    IBaseRepositoryAsync<NewsArticle> newsArticlesRepository,
-    IImageServiceAsync imageServiceAsync)
-    : IRequestHandler<DeleteNewsArticleRequest, DeleteNewsArticleResponse>
-{
-    public async Task<DeleteNewsArticleResponse> Handle(DeleteNewsArticleRequest request, CancellationToken cancellationToken)
-    {
-        var newsArticle = await newsArticlesRepository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new ArgumentException("There no news article with the input Id.");
+//internal sealed record DeleteNewsArticleRequest(Guid Id) : IRequest<DeleteNewsArticleResponse>;
+//internal sealed record DeleteNewsArticleResponse(string Message);
 
-        await imageServiceAsync.DeleteAsync(newsArticle.ImagesNames);
-        await newsArticlesRepository.DeleteAsync(newsArticle.Id, cancellationToken);
+//internal sealed class DeleteNewsArticleHandler(ICrudServicesAsync servicesAsync, IImageServiceAsync imageServiceAsync)
+//    : IRequestHandler<DeleteNewsArticleRequest, DeleteNewsArticleResponse>
+//{
+//    public async Task<DeleteNewsArticleResponse> Handle(DeleteNewsArticleRequest request, CancellationToken cancellationToken)
+//    {
+//        var newsArticle = await servicesAsync.ReadSingleAsync<NewsArticle>(request.Id)
+//            ?? throw new ArgumentException("There no news article with the input Id.");
 
-        return new DeleteNewsArticleResponse("News article by Id deleted successfully.");
-    }
-}
+//        await imageServiceAsync.DeleteAsync(newsArticle.ImagesNames);
+//        await servicesAsync.DeleteAndSaveAsync<NewsArticle>(newsArticle.Id);
+
+//        return new DeleteNewsArticleResponse("News article by Id deleted successfully.");
+//    }
+//}

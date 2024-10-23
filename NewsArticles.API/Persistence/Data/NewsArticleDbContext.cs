@@ -7,9 +7,10 @@ using NewsArticles.API.Persistence.Identity;
 
 namespace NewsArticles.API.Persistence.Data;
 
-public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options)
-    : IdentityDbContext<User, IdentityRole<Guid>, Guid>(options)
+public class NewsArticleDBContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
+    public NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options) : base(options) { }
+
     public DbSet<Author> Authors {  get; set; }
     public DbSet<Commenter> Commenters {  get; set; }
 

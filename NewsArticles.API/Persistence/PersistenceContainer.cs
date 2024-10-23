@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GenericServices;
+using GenericServices.PublicButHidden;
+
+using Microsoft.EntityFrameworkCore;
 
 using NewsArticles.API.Application.Contracts;
 using NewsArticles.API.Application.Services;
@@ -15,6 +18,11 @@ public static class PersistenceContainer
             .UseSqlServer(builder.Configuration.GetConnectionString("LocalContext") ??
                 throw new InvalidOperationException("Connection string 'LocalContext' not found.")));
 
+        //builder.Services.RegisterGenericServicesEntities<ApplicationDbContext>();
+
+        builder.Services.AddScoped<DbContext, NewsArticleDBContext>(); // Register the DbContext as a scoped service
+        builder.Services.AddTransient(typeof(ICrudServicesAsync<>), typeof(CrudServicesAsync<>));
+        builder.Services.AddScoped(typeof(ICrudServices<>), typeof(CrudServices<>));
         builder.Services.AddScoped<IImageServiceAsync, ImageServiceAsync>();
 
         return builder.Services;

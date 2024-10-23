@@ -1,43 +1,46 @@
-﻿using Mapster;
+﻿//using GenericServices;
 
-using MediatR;
+//using Mapster;
 
-using NewsArticles.API.Application.Contracts;
-using NewsArticles.API.Domain.DTOs;
-using NewsArticles.API.Domain.Entities;
+//using MediatR;
 
-namespace NewsArticles.API.Application.Features.NewsArticles.Queries;
+//using Microsoft.AspNetCore.Mvc;
 
-internal sealed record GetDetailedNewsArticleQuery(Guid Id) : IRequest<GetDetailedNewsArticleViewModel>;
-internal sealed record GetDetailedNewsArticleViewModel(
-     Guid Id,
-    string Title,
-    string Content,
-    List<string> ImagesNames,
-    int ViewsCount,
-    DateTime PublishedDate,
-    int InteractionsCount,
-    int CommentsCount,
-    AuthorDTO AuthorDTO,
+//using NewsArticles.API.Domain.DTOs;
+//using NewsArticles.API.Domain.Entities;
 
-    List<InteractionDTO> InteractionDTOs,
-    List<CommentDTO> CommentDTOs);
+//namespace NewsArticles.API.Application.Features.NewsArticles.Queries;
 
-internal sealed class GetDetailedNewsArticleHandler(IBaseRepositoryAsync<NewsArticle> newsArticlesRepository)
-    : IRequestHandler<GetDetailedNewsArticleQuery, GetDetailedNewsArticleViewModel>
-{
-    public async Task<GetDetailedNewsArticleViewModel> Handle(GetDetailedNewsArticleQuery request, CancellationToken cancellationToken)
-    {
-        var newsArticle = await newsArticlesRepository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new ArgumentException("There no news article with the input Id.");
+//internal sealed record GetDetailedNewsArticleQuery(Guid Id) : IRequest<GetDetailedNewsArticleViewModel>;
+//internal sealed record GetDetailedNewsArticleViewModel(
+//     Guid Id,
+//    string Title,
+//    string Content,
+//    List<string> ImagesNames,
+//    int ViewsCount,
+//    DateTime PublishedDate,
+//    int InteractionsCount,
+//    int CommentsCount,
+//    AuthorDTO AuthorDTO,
 
-        var detailedNewsArticle = newsArticle.Adapt<NewsArticleDetailedDTO>();
+//    List<InteractionDTO> InteractionDTOs,
+//    List<CommentDTO> CommentDTOs);
 
-        return detailedNewsArticle.Adapt<GetDetailedNewsArticleViewModel>() with
-        { 
-            AuthorDTO = detailedNewsArticle.AuthorDTO,
-            CommentDTOs = newsArticle.Comments.Adapt<List<CommentDTO>>(),
-            InteractionDTOs = newsArticle.Interactions.Adapt<List<InteractionDTO>>(),
-        };
-    }
-}
+//internal sealed class GetDetailedNewsArticleHandler([FromServices] ICrudServicesAsync servicesAsync)
+//    : IRequestHandler<GetDetailedNewsArticleQuery, GetDetailedNewsArticleViewModel>
+//{
+//    public async Task<GetDetailedNewsArticleViewModel> Handle(GetDetailedNewsArticleQuery request, CancellationToken cancellationToken)
+//    {
+//        var newsArticle = await servicesAsync.ReadSingleAsync<NewsArticle>(request.Id)
+//            ?? throw new ArgumentException("There no news article with the input Id.");
+
+//        var detailedNewsArticle = newsArticle.Adapt<NewsArticleDetailedDTO>();
+
+//        return detailedNewsArticle.Adapt<GetDetailedNewsArticleViewModel>() with
+//        { 
+//            AuthorDTO = detailedNewsArticle.AuthorDTO,
+//            CommentDTOs = newsArticle.Comments.Adapt<List<CommentDTO>>(),
+//            InteractionDTOs = newsArticle.Interactions.Adapt<List<InteractionDTO>>(),
+//        };
+//    }
+//}
