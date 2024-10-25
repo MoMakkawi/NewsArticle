@@ -9,5 +9,5 @@ public class User : IdentityUser<Guid>
     public required string LastName { get; set; }
     public string? ProfileImageName { get; set; }
 
-    public virtual required List<NewsArticle> NewsArticles { get; set; } = [];
+    public virtual ICollection<NewsArticle>? NewsArticles { get; set; } 
 }

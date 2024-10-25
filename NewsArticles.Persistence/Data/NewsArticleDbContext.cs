@@ -11,14 +11,12 @@ public class NewsArticleDBContext(DbContextOptions<NewsArticleDBContext> options
     : IdentityDbContext<User, IdentityRole<Guid>, Guid>(options)
 {
     public DbSet<NewsArticle> NewsArticles { get; set; }
-    public DbSet<User> Users { get; set; }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<User>()
             .HasMany<Comment>()
             .WithOne()
-            .HasForeignKey(x => x.CommenterId);
+            .HasForeignKey(x => x.ActionBy);
 
         builder.Entity<User>()
             .HasMany<Interaction>()
