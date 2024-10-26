@@ -83,43 +83,43 @@ internal static class Seeders
     ];
     #endregion
     #region Roles
-    private readonly static List<IdentityRole<Guid>> Roles = [
+    private readonly static List<IdentityRole<Guid>> RolesLs = [
         new()
         {
-            Id = UserRoles.ADMIN_ID,
-            Name = UserRoles.ADMIN,
-            NormalizedName = UserRoles.ADMIN,
+            Id = Roles.ADMIN_ID,
+            Name = Roles.ADMIN,
+            NormalizedName = Roles.ADMIN,
             ConcurrencyStamp = Guid.NewGuid().ToString()
         },
         new()
         {
-            Id = UserRoles.AUTHOR_ID,
-            Name = UserRoles.AUTHOR,
-            NormalizedName = UserRoles.AUTHOR,
+            Id = Roles.AUTHOR_ID,
+            Name = Roles.AUTHOR,
+            NormalizedName = Roles.AUTHOR,
             ConcurrencyStamp = Guid.NewGuid().ToString()
         },
         new()
         {
-            Id = UserRoles.COMMENTER_ID,
-            Name = UserRoles.COMMENTER,
-            NormalizedName = UserRoles.COMMENTER,
+            Id = Roles.COMMENTER_ID,
+            Name = Roles.COMMENTER,
+            NormalizedName = Roles.COMMENTER,
             ConcurrencyStamp = Guid.NewGuid().ToString()
         },
     ];
     private readonly static List<IdentityUserRole<Guid>> UserRolesLs = [
         new()
         {
-            RoleId = UserRoles.ADMIN_ID,
+            RoleId = Roles.ADMIN_ID,
             UserId = Admin.Id,
         },
         ..Authors.Select(author => new IdentityUserRole<Guid>() 
         {
-            RoleId = UserRoles.AUTHOR_ID,
+            RoleId = Roles.AUTHOR_ID,
             UserId = author.Id
         }),
         ..Commenters.Select(commenter => new IdentityUserRole<Guid>()
         {
-            RoleId = UserRoles.COMMENTER_ID,
+            RoleId = Roles.COMMENTER_ID,
             UserId = commenter.Id
         })
     ];
@@ -161,7 +161,7 @@ internal static class Seeders
 
     public static void SeedUsersAndRoles(NewsArticleDBContext context)
     {
-        context.Roles.AddRange(Roles);
+        context.Roles.AddRange(RolesLs);
         context.UserRoles.AddRange(UserRolesLs);
 
         // seed admin
