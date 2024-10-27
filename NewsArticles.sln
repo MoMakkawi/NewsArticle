@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsArticles.Domain", "NewsArticles.Domain\NewsArticles.Domain.csproj", "{AAE9EEEC-F00D-4775-8A06-33F6161332AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsArticles.Domain", "NewsArticles.Domain\NewsArticles.Domain.csproj", "{AAE9EEEC-F00D-4775-8A06-33F6161332AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsArticles.Persistence", "NewsArticles.Persistence\NewsArticles.Persistence.csproj", "{0705C851-861D-4C74-B3FB-77184EBCB9F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsArticles.Persistence", "NewsArticles.Persistence\NewsArticles.Persistence.csproj", "{0705C851-861D-4C74-B3FB-77184EBCB9F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsArticles.Application", "NewsArticles.Application\NewsArticles.Application.csproj", "{8C333309-119F-4949-A6CE-A1CA0B724E51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0705C851-861D-4C74-B3FB-77184EBCB9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0705C851-861D-4C74-B3FB-77184EBCB9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0705C851-861D-4C74-B3FB-77184EBCB9F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C333309-119F-4949-A6CE-A1CA0B724E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C333309-119F-4949-A6CE-A1CA0B724E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C333309-119F-4949-A6CE-A1CA0B724E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C333309-119F-4949-A6CE-A1CA0B724E51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
